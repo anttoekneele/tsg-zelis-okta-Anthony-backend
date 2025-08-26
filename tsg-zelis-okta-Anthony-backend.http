@@ -1,0 +1,6 @@
+@tsg_zelis_okta_Anthony_backend_HostAddress = http://localhost:5216
+
+GET {{tsg_zelis_okta_Anthony_backend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
