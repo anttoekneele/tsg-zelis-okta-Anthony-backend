@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace tsg_zelis_okta_Anthony_backend.Migrations
 {
     /// <inheritdoc />
@@ -113,6 +115,25 @@ namespace tsg_zelis_okta_Anthony_backend.Migrations
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Claims",
+                columns: new[] { "Id", "Type", "Value" },
+                values: new object[,]
+                {
+                    { new Guid("00000000-0000-0000-0000-000000000001"), "permissions", "Audit.ViewAuthEvents" },
+                    { new Guid("00000000-0000-0000-0000-000000000002"), "permissions", "Audit.RoleChanges" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id", "Description", "Name" },
+                values: new object[,]
+                {
+                    { new Guid("00000000-0000-0000-0000-000000000001"), "Default for all new users", "BasicUser" },
+                    { new Guid("00000000-0000-0000-0000-000000000002"), "Can view auth events", "AuthObserver" },
+                    { new Guid("00000000-0000-0000-0000-000000000003"), "Can view auth events and role changes", "SecurityAuditor" }
                 });
 
             migrationBuilder.CreateIndex(

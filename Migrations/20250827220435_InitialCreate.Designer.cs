@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace tsg_zelis_okta_Anthony_backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250827202315_InitialCreate")]
+    [Migration("20250827220435_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -43,6 +43,20 @@ namespace tsg_zelis_okta_Anthony_backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Claims");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000001"),
+                            Type = "permissions",
+                            Value = "Audit.ViewAuthEvents"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000002"),
+                            Type = "permissions",
+                            Value = "Audit.RoleChanges"
+                        });
                 });
 
             modelBuilder.Entity("Role", b =>
@@ -67,6 +81,26 @@ namespace tsg_zelis_okta_Anthony_backend.Migrations
                         .IsUnique();
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000001"),
+                            Description = "Default for all new users",
+                            Name = "BasicUser"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000002"),
+                            Description = "Can view auth events",
+                            Name = "AuthObserver"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000003"),
+                            Description = "Can view auth events and role changes",
+                            Name = "SecurityAuditor"
+                        });
                 });
 
             modelBuilder.Entity("RoleClaim", b =>

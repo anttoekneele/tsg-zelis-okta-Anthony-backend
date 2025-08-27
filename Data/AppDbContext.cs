@@ -115,5 +115,25 @@ public class AppDbContext : DbContext
                 .HasForeignKey(se => se.AffectedUserId)
                 .OnDelete(DeleteBehavior.Restrict); // prevent cascade delete
         });
+
+        // Seeding roles
+        var basicUserId = Guid.Parse("00000000-0000-0000-0000-000000000001");
+        var authObserverId = Guid.Parse("00000000-0000-0000-0000-000000000002");
+        var securityAuditorId = Guid.Parse("00000000-0000-0000-0000-000000000003");
+
+        modelBuilder.Entity<Role>().HasData(
+            new Role { Id = basicUserId, Name = "BasicUser", Description = "Default for all new users" },
+            new Role { Id = authObserverId, Name = "AuthObserver", Description = "Can view auth events" },
+            new Role { Id = securityAuditorId, Name = "SecurityAuditor", Description = "Can view auth events and role changes" }
+        );
+
+        // Seeding claims
+        var viewClaimId = Guid.Parse("00000000-0000-0000-0000-000000000001");
+        var roleClaimId = Guid.Parse("00000000-0000-0000-0000-000000000002");
+
+        modelBuilder.Entity<Claim>().HasData(
+            new Claim { Id = viewClaimId, Type = "permissions", Value = "Audit.ViewAuthEvents" },
+            new Claim { Id = roleClaimId, Type = "permissions", Value = "Audit.RoleChanges" }
+        );
     }
 }
