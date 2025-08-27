@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Enable CORS (for communication with Blazor Server UI)
@@ -8,10 +10,16 @@ builder.Services.AddCors(options =>
     {
         policy
             .AllowAnyOrigin() // remove when frontend is created
-            // .WithOrigins("allowedOrigins") <-- uncomment and update url when frontend is created
+                              // .WithOrigins("allowedOrigins") <-- uncomment and update url when frontend is created
             .AllowAnyHeader()
             .AllowAnyMethod();
     });
+});
+
+// Configure SQL Server connection
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
 // Add services to the container.
