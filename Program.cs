@@ -25,6 +25,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Register the Audit Service
 builder.Services.AddScoped<IAuditService, AuditService>();
 
+// Register Role Service
+builder.Services.AddScoped<IRoleService, RoleService>();
+
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
