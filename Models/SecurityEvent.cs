@@ -4,7 +4,7 @@ public class SecurityEvent
     public string EventType { get; set; }
     public Guid AuthorUserId { get; set; }
     public Guid AffectedUserId { get; set; }
-    public DateTime OccuredUtc { get; set; }
+    public DateTime OccurredUtc { get; set; }
     public string Details { get; set; }
 
     // Navigation Properties

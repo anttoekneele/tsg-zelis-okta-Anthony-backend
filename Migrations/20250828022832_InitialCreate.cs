@@ -44,8 +44,7 @@ namespace tsg_zelis_okta_Anthony_backend.Migrations
                 columns: table => new
                 {
                     RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ClaimId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ClaimId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    ClaimId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -56,11 +55,6 @@ namespace tsg_zelis_okta_Anthony_backend.Migrations
                         principalTable: "Claims",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_RoleClaims_Claims_ClaimId1",
-                        column: x => x.ClaimId1,
-                        principalTable: "Claims",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_RoleClaims_Roles_RoleId",
                         column: x => x.RoleId,
@@ -97,7 +91,7 @@ namespace tsg_zelis_okta_Anthony_backend.Migrations
                     EventType = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     AuthorUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AffectedUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OccuredUtc = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "SYSUTCDATETIME()"),
+                    OccurredUtc = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "SYSUTCDATETIME()"),
                     Details = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false)
                 },
                 constraints: table =>
@@ -140,11 +134,6 @@ namespace tsg_zelis_okta_Anthony_backend.Migrations
                 name: "IX_RoleClaims_ClaimId",
                 table: "RoleClaims",
                 column: "ClaimId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RoleClaims_ClaimId1",
-                table: "RoleClaims",
-                column: "ClaimId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Roles_Name",

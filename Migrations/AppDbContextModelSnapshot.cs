@@ -108,14 +108,9 @@ namespace tsg_zelis_okta_Anthony_backend.Migrations
                     b.Property<Guid>("ClaimId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ClaimId1")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("RoleId", "ClaimId");
 
                     b.HasIndex("ClaimId");
-
-                    b.HasIndex("ClaimId1");
 
                     b.ToTable("RoleClaims");
                 });
@@ -142,7 +137,7 @@ namespace tsg_zelis_okta_Anthony_backend.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTime>("OccuredUtc")
+                    b.Property<DateTime>("OccurredUtc")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("SYSUTCDATETIME()");
@@ -188,14 +183,10 @@ namespace tsg_zelis_okta_Anthony_backend.Migrations
             modelBuilder.Entity("RoleClaim", b =>
                 {
                     b.HasOne("Claim", "Claim")
-                        .WithMany()
+                        .WithMany("RoleClaims")
                         .HasForeignKey("ClaimId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Claim", null)
-                        .WithMany("RoleClaims")
-                        .HasForeignKey("ClaimId1");
 
                     b.HasOne("Role", "Role")
                         .WithMany("RoleClaims")

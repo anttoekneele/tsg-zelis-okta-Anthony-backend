@@ -85,7 +85,7 @@ public class AppDbContext : DbContext
                 .HasForeignKey(rc => rc.RoleId);
 
             entity.HasOne(rc => rc.Claim)
-                .WithMany()
+                .WithMany(c => c.RoleClaims)
                 .HasForeignKey(rc => rc.ClaimId);
         });
 
@@ -98,7 +98,7 @@ public class AppDbContext : DbContext
                 .IsRequired()
                 .HasMaxLength(50);
 
-            entity.Property(se => se.OccuredUtc)
+            entity.Property(se => se.OccurredUtc)
                 .IsRequired()
                 .HasDefaultValueSql("SYSUTCDATETIME()");
 
