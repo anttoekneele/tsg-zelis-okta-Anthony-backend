@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace tsg_zelis_okta_Anthony_backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250828022832_InitialCreate")]
+    [Migration("20250828023649_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
