@@ -38,6 +38,15 @@ builder.Services
     .AddMutationType(d => d.Name("Mutation"))
         .AddType<RoleMutations>();
 
+// Authorization
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("CanViewAuthEvents", policy =>
+        policy.RequireClaim("permissions", "Audit.ViewAuthEvents"));
+    options.AddPolicy("CanViewRoleChanges", policy =>
+        policy.RequireClaim("permissions", "Audit.RoleChanges"));
+});
+
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
