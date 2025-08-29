@@ -28,12 +28,25 @@ builder.Services.AddScoped<IAuditService, AuditService>();
 // Register Role Service
 builder.Services.AddScoped<IRoleService, RoleService>();
 
+// Configure GraphQL
+builder.Services
+    .AddGraphQLServer()
+    .AddQueryType(d => d.Name("Query"))
+        .AddType<UserQueries>()
+        .AddType<RoleQueries>()
+        .AddType<SecurityEventQueries>()
+    .AddMutationType(d => d.Name("Mutation"))
+        .AddType<RoleMutations>();
+
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+// Map HTTP requests to GraphQL endpoint
+app.MapGraphQL();
 
 // Manual Test
 using (var scope = app.Services.CreateScope())
@@ -59,16 +72,16 @@ using (var scope = app.Services.CreateScope())
     // Console.WriteLine("✅ User added");
 
     // ✅ Test role assignment
-    await roleService.AssignRole(userId, roleId, authorId);
-    Console.WriteLine("✅ Role assignment test complete");
+    // await roleService.AssignRole(userId, roleId, authorId);
+    // Console.WriteLine("✅ Role assignment test complete");
 
     // ✅ Test login event
-    await auditService.LogLoginEvent(userId, "test-provider");
-    Console.WriteLine("✅ Login event logged");
+    // await auditService.LogLoginEvent(userId, "test-provider");
+    // Console.WriteLine("✅ Login event logged");
 
     // ✅ Test logout event
-    await auditService.LogLogoutEvent(userId);
-    Console.WriteLine("✅ Logout event logged");
+    // await auditService.LogLogoutEvent(userId);
+    // Console.WriteLine("✅ Logout event logged");
 
     // ✅ Query all security events
     var events = await context.SecurityEvents
