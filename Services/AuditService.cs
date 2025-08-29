@@ -39,8 +39,19 @@ public class AuditService : IAuditService
         await _context.SaveChangesAsync();
     }
 
-    public Task LogRoleAssignedEvent(Guid authorId, Guid affectedId, string fromRole, string toRole)
+    public async Task LogRoleAssignedEvent(Guid authorId, Guid affectedId, string fromRole, string toRole)
     {
-        throw new NotImplementedException();
+        var eventRecord = new SecurityEvent
+        {
+            Id = Guid.NewGuid(),
+            EventType = "RoleAssigned",
+            AuthorUserId = authorId,
+            AffectedUserId = affectedId,
+            OccurredUtc = DateTime.UtcNow,
+            Details = $"from={fromRole} to={toRole}"
+        };
+
+        await _context.SecurityEvents.AddAsync(eventRecord);
+        await _context.SaveChangesAsync();
     }
 }

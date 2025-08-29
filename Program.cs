@@ -35,6 +35,54 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// Manual Test
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<AppDbContext>();
+    var roleService = services.GetRequiredService<IRoleService>();
+    var auditService = services.GetRequiredService<IAuditService>();
+
+    var userId = Guid.Parse("5ffd7f7f-52f9-45f4-be38-3f3f10456063");
+    var roleId = Guid.Parse("00000000-0000-0000-0000-000000000001"); // BasicUser
+    var authorId = userId;
+
+    // ✅ Add a test user
+    // context.Users.Add(new User
+    // {
+    //     Id = userId,
+    //     Email = "test@example.com",
+    //     ExternalId = "external-id",
+    //     RoleId = roleId
+    // });
+    // await context.SaveChangesAsync();
+    // Console.WriteLine("✅ User added");
+
+    // ✅ Test role assignment
+    await roleService.AssignRole(userId, roleId, authorId);
+    Console.WriteLine("✅ Role assignment test complete");
+
+    // ✅ Test login event
+    await auditService.LogLoginEvent(userId, "test-provider");
+    Console.WriteLine("✅ Login event logged");
+
+    // ✅ Test logout event
+    await auditService.LogLogoutEvent(userId);
+    Console.WriteLine("✅ Logout event logged");
+
+    // ✅ Query all security events
+    var events = await context.SecurityEvents
+        .Where(e => e.AuthorUserId == userId)
+        .OrderByDescending(e => e.OccurredUtc)
+        .ToListAsync();
+
+    Console.WriteLine("📄 Security Events:");
+    foreach (var e in events)
+    {
+        Console.WriteLine($"- {e.EventType} | {e.OccurredUtc} | {e.Details}");
+    }
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

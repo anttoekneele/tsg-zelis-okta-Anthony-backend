@@ -1,0 +1,8 @@
+public class RoleMutations
+{
+    public async Task<bool> AssignRole(Guid userId, Guid roleId, [Service] IRoleService roleService, [Service] IAuditService auditService)
+    {
+        await roleService.AssignRole(userId, roleId, Guid.NewGuid());
+        return true;
+    }
+}

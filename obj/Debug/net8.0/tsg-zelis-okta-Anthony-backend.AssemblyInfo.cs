@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("tsg-zelis-okta-Anthony-backend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6cb03f9ed3ab278d05cd389e9f57cecd8f7d218e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d0953b51380bc10cced57f300eb1603d8cf53b1d")]
 [assembly: System.Reflection.AssemblyProductAttribute("tsg-zelis-okta-Anthony-backend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("tsg-zelis-okta-Anthony-backend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
